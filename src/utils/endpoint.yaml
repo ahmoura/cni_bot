@@ -1,0 +1,9 @@
+api:
+  # https://sidra.ibge.gov.br/Ajax/JSon/Tabela/1/1737?versao=-1
+  protocol: https
+  host: sidra.ibge.gov.br
+  endpoints:
+    get:
+      path: /Ajax/JSon/Tabela/1/1737
+      params:
+        versao: -1
