@@ -1,2 +1,5 @@
 requests
 yaml
+pandas
+uuid
+pyarrow
