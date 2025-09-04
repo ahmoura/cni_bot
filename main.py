@@ -12,9 +12,8 @@ if data_e and data_e.get("status_code") == 200:
 
 # TODO: rodar em um container com python com versao 3 ou superior
 
-
-#TODO MOVE TO FUNCTION
-import pandas as pd
-import os
-for f in os.listdir('./output/'):
-    print(pd.read_parquet(f'./output/{f}'))
+# TODO: MOVE TO FUNCTION
+#import pandas as pd
+#import os
+#for f in os.listdir('./output/'):
+#    print(pd.read_parquet(f'./output/{f}'))
