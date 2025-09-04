@@ -4,7 +4,7 @@ import yaml
 # caminho com os links/caminhos para os dados a serem extraidos
 # TODO: usar caminho relativo ao inves de absoluto
 endpoint_path = {
-    "file": 'src/utils/endpoint.yaml', 
+    "file": 'config/endpoint.yaml', 
     "mode": 'r'
 }
 
