@@ -1,0 +1,13 @@
+A solucao proposta e conhecida como web scrapping, que consiste em programar bots com um script para simular um usuario real navegando em paginas da web, interagindo com elementos html.
+No python as bibliotecas mais famosas sao Beautifulsoup e Selenium (nunca atuei profissionalmente com elas mas entendo a teoria).
+
+Ao fazer uma visita na pagina do IBGE, e possivel verificar qual seria o caminho tomado como usuario, entender as interacoes necessarias com os elementos do site, copiando o XPATH de cada um para ser atribuido ao script que sera executado pelo robo. 
+ 
+1 - Acessar https://sidra.ibge.gov.br/
+2 - Clicar em busca (via XPATH)
+3 - Inserir nome ou numero da tabela (digita)
+4 - Clicar nos botoes que seleciona todas as checkboxes (via XPATH)
+5 - Clicar em download (via XPATH)
+6 - Clicar em download no modal (popup) (via XPATH)
+
+Apos obter o arquivo XLSX, desevolver um codigo para ler e manipular esses dados
