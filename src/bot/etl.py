@@ -4,15 +4,20 @@ from uuid import uuid4
 from datetime import datetime
 
 # funcao para extrair os dados da url lida do arquivo de configuracao
-# TODO: usar try except ao inves de printar um erro
-def extract(url:str, params:dict):
-    response = get(url, params=params)
-    if response.status_code == 200:
-        return response.json()
+def extract(url:str, params:dict)->dict:
+    """TODO DOCS"""
+    try:
+        response = get(url, params=params, timeout=10)
+        response.raise_for_status()
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return {"response": e,
+                "status_code": response.status_code}
     else:
-        print(f'ERROR: URL RETURN CODE {response.status_code}')
-        return None
+        return {"response": response.json(),
+            "status_code": response.status_code}
 
+    
 
 # funcao recursiva baseada no tipo de dado que foi lido no payload
 # cada chamada recursiva passa o nome da chave fonte para refenciar no arquivo de saida
@@ -25,25 +30,27 @@ def extract(url:str, params:dict):
 def transform_by_type(data:dict, src_key:str = None):
     data_t = {}
     data_t_output = {}
+
     for data_key in data.keys():
 
-        k = f'{src_key}_{data_key}' if src_key is not None else data_key
+        key = f'{src_key}_{data_key}' if src_key else data_key
 
         if isinstance(data[data_key], dict) is True:
-            df_tmp = transform_by_type(data[data_key], src_key=k)
+            df_tmp = transform_by_type(data[data_key], src_key=key)
             data_t_output.update(df_tmp)
 
         elif isinstance(data[data_key], list) is True:
             df = pd.DataFrame(data[data_key])
-            data_t_output[k] = df
+            data_t_output[key] = df
 
         elif isinstance(data[data_key], list) is False:
-            data_t[k] = data[data_key]
+            data_t[key] = data[data_key]
 
     df = pd.DataFrame(data_t, index=[0])
 
-    k = 'ibge' if k == data_key else k
-    data_t_output[k] = df
+    # TODO IBGE as param later
+    key = 'ibge' if src_key is None else key
+    data_t_output[key] = df
 
     return data_t_output
 
@@ -65,7 +72,7 @@ def load(data:dict):
         df_metadata = pd.DataFrame(metadata, index=[0])
 
         for k, v in data.items():
-            print(k)
+            #TODO to params
             output_path = f'output/{k}.parquet'
             df = pd.concat([v, df_metadata], axis=1)
             df.to_parquet(output_path, index=False)
